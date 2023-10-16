@@ -1,0 +1,52 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular app
+        run: npm run build --prod
+
+      - name: Clone ShivamNagpal/ShivamNagpal.github.io repository
+        uses: actions/checkout@v2
+        with:
+          repository: ShivamNagpal/ShivamNagpal.github.io
+          path: deploy
+          token: ${{ secrets.GH_REPO_TOKEN }}
+
+      - name: Clear contents of the ShivamNagpal/ShivamNagpal.github.io repository
+        run: |
+          cd deploy
+          rm -rf ./*
+          git restore CNAME 2>/dev/null || true
+
+      - name: Copy build output to ShivamNagpal/ShivamNagpal.github.io repository
+        run: |
+          cp -r dist/portfolio-angular-app/* deploy/
+          echo ${{ github.sha }} > deploy/.deployed-commit
+
+      - name: Commit and push to ShivamNagpal/ShivamNagpal.github.io repository
+        run: |
+          cd deploy
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Deploying build from commit ${{ github.sha }}"
+          git push
