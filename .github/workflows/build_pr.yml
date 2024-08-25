@@ -23,5 +23,8 @@ jobs:
       - name: Node Dependencies
         run: npm ci
 
-      - name: Node Build
+      - name: Run Test
+        run: npm run test
+
+      - name: App Build
         run: npm run build

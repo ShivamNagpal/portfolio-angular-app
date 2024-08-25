@@ -8,7 +8,8 @@
     "build": "./build.sh",
     "watch": "ng build --watch --configuration development",
     "prettier": "npx prettier . --write --ignore-unknown",
-    "test": "ng test"
+    "test": "ng test --browsers ChromeHeadless --watch=false",
+    "test-browser": "ng test"
   },
   "private": true,
   "dependencies": {
