@@ -1,0 +1,9 @@
+.nav-bar {
+  .nav-item {
+    @apply text-amber-600 my-2 block sm:my-auto;
+  }
+
+  .active {
+    @apply font-bold text-white;
+  }
+}
