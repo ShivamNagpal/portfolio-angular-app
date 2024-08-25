@@ -1,8 +1,30 @@
 <div class="app-container">
-  <nav class="nav-bar">
-    <a class="button" routerLink="">Home</a>
-    <a class="button" routerLink="/work">Work</a>
-    <a class="button" routerLink="/contact">Contact</a>
+  <nav class="nav-bar flex justify-around py-4 bg-gray-900">
+    <a
+      class="nav-item"
+      routerLink=""
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Home
+    </a>
+    <a
+      class="nav-item"
+      routerLink="/work"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      Work
+    </a>
+    <a
+      class="nav-item"
+      routerLink="/contact"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      Contact
+    </a>
   </nav>
 </div>
 

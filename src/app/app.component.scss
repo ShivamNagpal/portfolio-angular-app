@@ -1,0 +1,9 @@
+.nav-bar {
+  .nav-item {
+    @apply text-amber-600;
+  }
+
+  .active {
+    @apply font-bold text-white;
+  }
+}
