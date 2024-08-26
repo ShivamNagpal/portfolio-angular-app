@@ -1,0 +1,52 @@
+<nav
+  [ngClass]="{ 'h-full': isOpen, fixed: isOpen, relative: !isOpen }"
+  class="nav-bar px-4 py-4 bg-gray-900 w-full sm:h-auto sm:flex sm:px-0 sm:w-full sm:relative"
+>
+  <div
+    [ngClass]="{ 'justify-end': isOpen }"
+    class="flex flex-row w-full sm:hidden"
+  >
+    <button class="leading-[0]" (click)="toggleNavBar()">
+      <mat-icon class="text-white">{{ isOpen ? "close" : "menu" }}</mat-icon>
+    </button>
+  </div>
+  <ul
+    [ngClass]="{ hidden: !isOpen, block: isOpen }"
+    class="flex flex-col sm:flex sm:flex-1 sm:flex-row sm:justify-around"
+  >
+    <li>
+      <a
+        class="nav-item"
+        routerLink=""
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeNavBar()"
+      >
+        Home
+      </a>
+    </li>
+    <li>
+      <a
+        class="nav-item"
+        routerLink="/work"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        (click)="closeNavBar()"
+      >
+        Work
+      </a>
+    </li>
+    <li>
+      <a
+        class="nav-item"
+        routerLink="/contact"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        (click)="closeNavBar()"
+      >
+        Contact
+      </a>
+    </li>
+  </ul>
+</nav>
