@@ -17,12 +17,34 @@
     </span>
     <div class="flex-1 content-center">
       <div
-        class="bg-white bg-opacity-50 backdrop-blur p-12 flex flex-row gap-16 rounded-2xl items-center"
+        class="bg-gray-500 bg-opacity-80 backdrop-blur p-8 flex flex-col gap-8 rounded-2xl items-center"
       >
-        <mat-icon class="text-white text-7xl !w-auto !h-auto"> mail </mat-icon>
-        <mat-icon class="text-white text-7xl !w-auto !h-auto">
-          calendar_month
-        </mat-icon>
+        <p class="contact-methods-title">Book a meeting</p>
+        <a href="https://cal.com/shivamnagpal" target="_blank">
+          <mat-icon class="text-white text-7xl !w-auto !h-auto">
+            calendar_month
+          </mat-icon>
+        </a>
+        <p class="text-white text-2xl my-4">Or</p>
+
+        <p class="contact-methods-title">Send an email</p>
+        <div
+          class="bg-gray-300 bg-opacity-50 px-4 py-2 rounded-xl flex flex-row gap-1 items-center"
+        >
+          <p class="text-white flex-1 font-bold">{{ email }}</p>
+          <button (click)="copyEmail()">
+            <mat-icon class="ml-4 email-buttons !w-auto !h-auto">
+              content_copy
+            </mat-icon>
+          </button>
+          <button>
+            <a href="{{ 'mailto:' + email }}">
+              <mat-icon class="ml-2 email-buttons !w-auto !h-auto">
+                send
+              </mat-icon>
+            </a>
+          </button>
+        </div>
       </div>
     </div>
   </div>

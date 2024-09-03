@@ -1,3 +1,11 @@
 :host {
-  flex: 1;
+  @apply flex-1;
+}
+
+.contact-methods-title {
+  @apply text-white font-bold text-2xl;
+}
+
+.email-buttons {
+  @apply text-white font-bold text-3xl;
 }
