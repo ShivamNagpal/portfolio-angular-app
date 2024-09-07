@@ -3,7 +3,11 @@
 }
 
 .contact-methods-title {
-  @apply text-white font-bold text-2xl;
+  @apply text-white mb-3 text-2xl;
+}
+
+.contact-methods-separator {
+  @apply w-16 h-[0.2rem] bg-gray-50 rounded;
 }
 
 .email-buttons {
