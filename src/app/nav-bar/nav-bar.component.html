@@ -29,12 +29,25 @@
     <li>
       <a
         class="nav-item"
-        routerLink="/work"
+        routerLink="/blogs"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
+        [routerLinkActiveOptions]="{ exact: true }"
         (click)="closeNavBar()"
       >
-        Work
+        Blogs
+      </a>
+    </li>
+    <li>
+      <a
+        class="nav-item"
+        routerLink="/videos"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeNavBar()"
+      >
+        Videos
       </a>
     </li>
     <li>

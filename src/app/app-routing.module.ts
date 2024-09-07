@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { WorkComponent } from './work/work.component';
 import { ContactComponent } from './contact/contact.component';
+import { BlogsComponent } from './blogs/blogs.component';
+import { VideosComponent } from './videos/videos.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'work', component: WorkComponent },
+  { path: 'blogs', component: BlogsComponent },
+  { path: 'videos', component: VideosComponent },
   { path: 'contact', component: ContactComponent },
 ];
 
