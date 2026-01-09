@@ -14,52 +14,19 @@
     [ngClass]="{ hidden: !isOpen, block: isOpen }"
     class="flex flex-col sm:flex sm:flex-1 sm:flex-row sm:justify-around"
   >
-    <li>
-      <a
-        class="nav-item"
-        routerLink=""
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        [routerLinkActiveOptions]="{ exact: true }"
-        (click)="closeNavBar()"
-      >
-        Home
-      </a>
-    </li>
-    <li>
-      <a
-        class="nav-item"
-        routerLink="/blogs"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        [routerLinkActiveOptions]="{ exact: true }"
-        (click)="closeNavBar()"
-      >
-        Blogs
-      </a>
-    </li>
-    <li>
-      <a
-        class="nav-item"
-        routerLink="/videos"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        [routerLinkActiveOptions]="{ exact: true }"
-        (click)="closeNavBar()"
-      >
-        Videos
-      </a>
-    </li>
-    <li>
-      <a
-        class="nav-item"
-        routerLink="/contact"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        (click)="closeNavBar()"
-      >
-        Contact
-      </a>
-    </li>
+    @for (item of navItems; track item.name) {
+      <li>
+        <a
+          class="nav-item"
+          routerLink="{{ item.link }}"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeNavBar()"
+        >
+          {{ item.name }}
+        </a>
+      </li>
+    }
   </ul>
 </nav>
