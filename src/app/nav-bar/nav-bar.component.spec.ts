@@ -1,0 +1,24 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { NavBarComponent } from './nav-bar.component';
+import { RouterModule } from '@angular/router';
+import { routes } from '../app-routing.module';
+
+describe('NavBarComponent', () => {
+  let component: NavBarComponent;
+  let fixture: ComponentFixture<NavBarComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RouterModule.forRoot(routes), NavBarComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(NavBarComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -1,0 +1,56 @@
+<div class="relative h-full">
+  <div class="bg-black overflow-hidden w-screen h-full">
+    <img
+      ngSrc="assets/computer.jpg"
+      alt="background"
+      class="blur-sm object-cover object-left"
+      fill
+    />
+  </div>
+
+  <div
+    class="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col gap-2 items-center w-full h-full"
+  >
+    <h1 class="text-3xl text-white center mt-4">Contact Me</h1>
+    <span class="text-sm text-gray-300 text-center">
+      Have a question or want to work together
+    </span>
+    <div class="flex-1 content-center">
+      <div
+        class="bg-gray-500 bg-opacity-30 backdrop-blur p-8 flex flex-col rounded-2xl items-center"
+      >
+        <p class="contact-methods-title">Book a meeting</p>
+        <a href="https://cal.com/shivamnagpal" target="_blank">
+          <mat-icon class="text-white text-5xl !w-auto !h-auto">
+            calendar_month
+          </mat-icon>
+        </a>
+
+        <div class="my-8 flex flex-row items-center gap-2">
+          <div class="contact-methods-separator"></div>
+          <p class="text-white text-2xl">Or</p>
+          <div class="contact-methods-separator"></div>
+        </div>
+
+        <p class="contact-methods-title">Send an email</p>
+        <div
+          class="bg-gray-300 bg-opacity-50 px-4 py-2 rounded-xl flex flex-row gap-1 items-center"
+        >
+          <p class="text-white flex-1 font-bold">{{ email }}</p>
+          <button (click)="copyEmail()">
+            <mat-icon class="ml-4 email-buttons !w-auto !h-auto">
+              content_copy
+            </mat-icon>
+          </button>
+          <button>
+            <a href="{{ 'mailto:' + email }}">
+              <mat-icon class="ml-2 email-buttons !w-auto !h-auto">
+                send
+              </mat-icon>
+            </a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
