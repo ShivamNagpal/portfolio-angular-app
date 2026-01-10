@@ -27,6 +27,7 @@ $portfolio-angular-app-theme: mat.define-theme(
 // that you are using.
 :root {
   @include mat.all-component-themes($portfolio-angular-app-theme);
+  --color-primary: 17 24 39;
 }
 
 // Comment out the line below if you want to use the pre-defined typography utility classes.

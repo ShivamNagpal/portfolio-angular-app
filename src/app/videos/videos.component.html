@@ -1,1 +1,26 @@
-<p>videos works!</p>
+<div class="h-screen overflow-y-auto p-4 mt-4">
+  <div class="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+    @for (video of videoItems; track video.track()) {
+      <div
+        class="rounded-lg overflow-hidden bg-white border-2 shadow-md ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl"
+      >
+        <a
+          href="https://www.youtube.com/watch?v={{ video.id }}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            class="w-full aspect-video object-cover"
+            ngSrc="https://img.youtube.com/vi/{{ video.id }}/maxresdefault.jpg"
+            alt="{{ video.title }}"
+            height="360"
+            width="640"
+          />
+        </a>
+        <div class="p-3 text-sm text-white/90 bg-primary font-bold">
+          {{ video.title }}
+        </div>
+      </div>
+    }
+  </div>
+</div>
