@@ -5,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 
 interface NavItem {
   name: string;
-  link: string;
+  path: string;
 }
 
 @Component({
@@ -18,10 +18,10 @@ interface NavItem {
 export class NavBarComponent {
   isOpen: boolean = false;
   navItems: NavItem[] = [
-    { name: 'Home', link: '/' },
-    // { name: 'Blogs', link: '/blogs' },
-    // { name: 'Videos', link: '/videos' },
-    { name: 'Contact', link: '/contact' },
+    { name: 'Home', path: '/' },
+    // { name: 'Blogs', path: '/blogs' },
+    { name: 'Videos', path: '/videos' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   toggleNavBar() {

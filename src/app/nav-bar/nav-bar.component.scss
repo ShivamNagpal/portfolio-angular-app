@@ -1,6 +1,6 @@
 .nav-bar {
   .nav-item {
-    @apply text-gray-300 my-2 block sm:my-auto;
+    @apply text-gray-300 py-4 ml-4 block sm:my-auto sm:py-0 sm:ml-0 text-xl sm:text-base;
   }
 
   .active {
