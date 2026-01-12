@@ -9,6 +9,15 @@
     <button class="leading-[0]" (click)="toggleNavBar()">
       <mat-icon class="text-white">{{ isOpen ? "close" : "menu" }}</mat-icon>
     </button>
+
+    <div
+      [ngClass]="{ hidden: isOpen }"
+      class="flex-1 text-center text-white font-medium truncate"
+    >
+      {{ activeTabName }}
+    </div>
+
+    <div class="w-6"></div>
   </div>
   <ul
     [ngClass]="{ hidden: !isOpen, block: isOpen }"
