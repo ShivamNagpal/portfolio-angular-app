@@ -1,9 +1,17 @@
 .nav-bar {
   .nav-item {
-    @apply text-gray-300 py-4 ml-4 block sm:my-auto sm:py-0 sm:ml-0 text-xl sm:text-base;
+    @apply text-gray-400 hover:text-white transition-colors block py-3 sm:py-1 text-lg sm:text-sm sm:font-medium relative;
   }
 
   .active {
-    @apply font-bold text-white;
+    @apply text-white;
+  }
+
+  // Underline accent for active item on desktop
+  @screen sm {
+    .active::after {
+      content: "";
+      @apply absolute left-0 right-0 -bottom-1 h-0.5 bg-blue-500 rounded-full;
+    }
   }
 }

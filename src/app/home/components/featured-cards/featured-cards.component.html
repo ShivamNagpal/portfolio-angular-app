@@ -1,0 +1,109 @@
+<section class="max-w-6xl mx-auto px-6 sm:px-8 py-16">
+  <h2 class="text-3xl font-bold text-white text-center mb-12">
+    What I'm Working On
+  </h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Project Card -->
+    @if (featuredProject(); as project) {
+      <a
+        routerLink="/code"
+        class="bg-gray-500 bg-opacity-30 backdrop-blur rounded-2xl p-6 flex flex-col h-full transition hover:-translate-y-0.5 hover:shadow-xl"
+      >
+        <mat-icon class="text-white text-3xl !w-auto !h-auto mb-4">
+          code
+        </mat-icon>
+        <h3 class="text-xl font-bold text-white mb-2">Featured Project</h3>
+        <p class="text-gray-300 mb-2">{{ project.title }}</p>
+        <p class="text-gray-400 text-sm mb-4 flex-1">
+          {{ project.summary }}
+        </p>
+        <div class="flex flex-wrap gap-2 mb-4">
+          @for (tag of project.tags; track tag) {
+            <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
+              {{ tag }}
+            </span>
+          }
+        </div>
+        <span class="text-blue-400 text-sm mt-auto">View all code &rarr;</span>
+      </a>
+    } @else {
+      <div
+        class="bg-gray-500 bg-opacity-30 backdrop-blur rounded-2xl p-6 flex flex-col h-full"
+      >
+        <mat-icon class="text-white text-3xl !w-auto !h-auto mb-4">
+          code
+        </mat-icon>
+        <h3 class="text-xl font-bold text-white mb-2">Featured Project</h3>
+        <p class="text-gray-500 italic">Coming Soon</p>
+      </div>
+    }
+
+    <!-- Video Card -->
+    @if (latestVideo(); as video) {
+      <a
+        routerLink="/videos"
+        class="bg-gray-500 bg-opacity-30 backdrop-blur rounded-2xl p-6 flex flex-col h-full transition hover:-translate-y-0.5 hover:shadow-xl"
+      >
+        <mat-icon class="text-white text-3xl !w-auto !h-auto mb-4">
+          play_circle
+        </mat-icon>
+        <h3 class="text-xl font-bold text-white mb-2">Latest Video</h3>
+        <div class="rounded-lg overflow-hidden mb-3">
+          <img
+            ngSrc="https://img.youtube.com/vi/{{ video.id }}/mqdefault.jpg"
+            alt="{{ video.title }}"
+            width="320"
+            height="180"
+            class="w-full"
+          />
+        </div>
+        <p class="text-gray-300 text-sm flex-1">{{ video.title }}</p>
+        <span class="text-blue-400 text-sm mt-auto pt-2">
+          View all videos &rarr;
+        </span>
+      </a>
+    } @else {
+      <div
+        class="bg-gray-500 bg-opacity-30 backdrop-blur rounded-2xl p-6 flex flex-col h-full"
+      >
+        <mat-icon class="text-white text-3xl !w-auto !h-auto mb-4">
+          play_circle
+        </mat-icon>
+        <h3 class="text-xl font-bold text-white mb-2">Latest Video</h3>
+        <p class="text-gray-500 italic">Coming Soon</p>
+      </div>
+    }
+
+    <!-- Blog Card -->
+    @if (latestBlog(); as post) {
+      <a
+        [routerLink]="['/blogs', post.slug]"
+        class="bg-gray-500 bg-opacity-30 backdrop-blur rounded-2xl p-6 flex flex-col h-full transition hover:-translate-y-0.5 hover:shadow-xl"
+      >
+        <mat-icon class="text-white text-3xl !w-auto !h-auto mb-4">
+          article
+        </mat-icon>
+        <h3 class="text-xl font-bold text-white mb-2">Latest Blog</h3>
+        <p class="text-gray-300 mb-2">{{ post.title }}</p>
+        <p class="text-gray-400 text-sm flex-1">{{ post.summary }}</p>
+        <span class="text-blue-400 text-sm mt-auto pt-2">
+          Read more &rarr;
+        </span>
+      </a>
+    } @else {
+      <div
+        class="bg-gray-500 bg-opacity-30 backdrop-blur rounded-2xl p-6 flex flex-col h-full"
+      >
+        <mat-icon class="text-white text-3xl !w-auto !h-auto mb-4">
+          article
+        </mat-icon>
+        <h3 class="text-xl font-bold text-white mb-2">Latest Blog</h3>
+        <p class="text-gray-500 italic">Coming Soon</p>
+        <p class="text-gray-600 text-sm mt-2">
+          Stay tuned for articles on distributed systems and backend
+          engineering.
+        </p>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "GitHub",
+    "url": "https://github.com/ShivamNagpal",
+    "icon": "github"
+  },
+  {
+    "name": "LinkedIn",
+    "url": "https://www.linkedin.com/in/shivamnagpal/",
+    "icon": "linkedin"
+  },
+  {
+    "name": "Schedule a Call",
+    "url": "https://cal.com/shivamnagpal",
+    "icon": "calendar_month"
+  },
+  {
+    "name": "Email",
+    "url": "mailto:hi@shivamnagpal.dev",
+    "icon": "email"
+  }
+]

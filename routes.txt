@@ -1,4 +1,7 @@
 /
+/about
+/code
 /contact
 /blogs
+/blogs/welcome
 /videos
