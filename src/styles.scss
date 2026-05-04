@@ -53,3 +53,70 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+// Markdown body styles for blog post content (rendered via ngx-markdown)
+.markdown-body {
+  @apply text-gray-300 leading-relaxed;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-white font-bold mt-8 mb-3;
+  }
+  h1 {
+    @apply text-3xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
+  }
+  h4 {
+    @apply text-lg;
+  }
+  p {
+    @apply my-4;
+  }
+  a {
+    @apply text-blue-400 hover:underline;
+  }
+  strong {
+    @apply text-white font-semibold;
+  }
+  em {
+    @apply italic;
+  }
+  ul,
+  ol {
+    @apply my-4 pl-6;
+  }
+  ul {
+    @apply list-disc;
+  }
+  ol {
+    @apply list-decimal;
+  }
+  li {
+    @apply my-1;
+  }
+  blockquote {
+    @apply border-l-4 border-blue-500 pl-4 italic text-gray-400 my-4;
+  }
+  code {
+    @apply bg-gray-800 text-gray-100 px-1.5 py-0.5 rounded text-sm font-mono;
+  }
+  pre {
+    @apply bg-gray-900 text-gray-100 p-4 rounded-xl overflow-x-auto my-6;
+  }
+  pre code {
+    @apply bg-transparent p-0;
+  }
+  hr {
+    @apply border-gray-700 my-8;
+  }
+  img {
+    @apply max-w-full rounded-xl my-6;
+  }
+}

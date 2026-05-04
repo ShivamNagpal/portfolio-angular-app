@@ -1,0 +1,121 @@
+<div class="min-h-screen bg-gray-950 px-4 sm:px-8 py-12">
+  <div class="max-w-6xl mx-auto">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-white mb-2">Code</h1>
+      <p class="text-gray-400">
+        Open source projects I've authored and contributed to.
+      </p>
+    </header>
+
+    @if (allTags().length > 0) {
+      <div class="mb-6">
+        <app-tag-filter
+          [availableTags]="allTags()"
+          (selectedTagsChange)="onSelectedTagsChange($event)"
+        />
+      </div>
+    }
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      @for (project of filteredProjects(); track project.id) {
+        <div
+          class="bg-gray-500 bg-opacity-30 backdrop-blur rounded-2xl p-6 flex flex-col transition hover:-translate-y-0.5 hover:shadow-xl"
+        >
+          <div class="flex items-start justify-between gap-3 mb-1">
+            <h2 class="text-xl font-bold text-white">{{ project.title }}</h2>
+            @if (project.role === "author") {
+              <span
+                class="text-xs px-2 py-1 rounded bg-emerald-500/20 text-emerald-300 whitespace-nowrap"
+              >
+                Author
+              </span>
+            } @else {
+              <span
+                class="text-xs px-2 py-1 rounded bg-sky-500/20 text-sky-300 whitespace-nowrap"
+              >
+                Contributor
+              </span>
+            }
+          </div>
+
+          <p class="text-gray-300 text-sm flex-1 my-3">{{ project.summary }}</p>
+
+          <div class="flex flex-wrap gap-2 mb-4">
+            @for (tag of project.tags; track tag) {
+              <span class="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
+                {{ tag }}
+              </span>
+            }
+          </div>
+
+          <div class="flex flex-wrap gap-4">
+            @if (project.repoUrl) {
+              <a
+                [href]="project.repoUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-blue-400 text-sm hover:underline flex items-center gap-1"
+              >
+                <mat-icon class="!w-4 !h-4 !text-base !leading-none">
+                  code
+                </mat-icon>
+                GitHub
+              </a>
+            }
+            @if (project.liveUrl) {
+              <a
+                [href]="project.liveUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-blue-400 text-sm hover:underline flex items-center gap-1"
+              >
+                <mat-icon class="!w-4 !h-4 !text-base !leading-none">
+                  open_in_new
+                </mat-icon>
+                Live
+              </a>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (manifest() && manifest()!.totalPages > 1) {
+      <nav
+        class="mt-10 flex flex-wrap items-center justify-center gap-2"
+        aria-label="Pagination"
+      >
+        <button
+          type="button"
+          class="text-xs px-3 py-1 rounded-full bg-gray-700 text-gray-200 hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed transition"
+          [disabled]="currentPage() === 1"
+          (click)="goToPage(currentPage() - 1)"
+        >
+          ← Prev
+        </button>
+        @for (n of pageNumbers(); track n) {
+          <button
+            type="button"
+            class="text-xs px-3 py-1 rounded-full transition"
+            [class.bg-blue-500]="n === currentPage()"
+            [class.text-white]="n === currentPage()"
+            [class.bg-gray-700]="n !== currentPage()"
+            [class.text-gray-300]="n !== currentPage()"
+            [class.hover:bg-gray-600]="n !== currentPage()"
+            (click)="goToPage(n)"
+          >
+            {{ n }}
+          </button>
+        }
+        <button
+          type="button"
+          class="text-xs px-3 py-1 rounded-full bg-gray-700 text-gray-200 hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed transition"
+          [disabled]="currentPage() === manifest()!.totalPages"
+          (click)="goToPage(currentPage() + 1)"
+        >
+          Next →
+        </button>
+      </nav>
+    }
+  </div>
+</div>

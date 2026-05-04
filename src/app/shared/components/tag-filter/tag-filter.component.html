@@ -1,0 +1,65 @@
+<div class="relative inline-block">
+  <button
+    type="button"
+    (click)="toggleOpen()"
+    class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs bg-gray-700 text-gray-200 hover:bg-gray-600 transition"
+    [attr.aria-expanded]="isOpen()"
+    aria-haspopup="listbox"
+  >
+    <mat-icon class="!w-4 !h-4 !text-base !leading-none">filter_list</mat-icon>
+    <span class="leading-none">{{ label }}</span>
+    @if (selectedCount > 0) {
+      <span
+        class="bg-blue-500 text-white rounded-full px-2 py-0.5 text-[10px] font-bold leading-none"
+      >
+        {{ selectedCount }}
+      </span>
+    }
+    <mat-icon
+      class="!w-4 !h-4 !text-base !leading-none transition-transform"
+      [class.rotate-180]="isOpen()"
+    >
+      expand_more
+    </mat-icon>
+  </button>
+
+  @if (isOpen()) {
+    <div
+      class="absolute z-50 left-0 mt-2 w-56 rounded-xl bg-gray-900 ring-1 ring-white/10 shadow-xl p-2"
+      role="listbox"
+    >
+      <div class="flex items-center justify-between px-2 py-1">
+        <span class="text-xs text-gray-400">Tags</span>
+        @if (selectedCount > 0) {
+          <button
+            type="button"
+            (click)="clear()"
+            class="text-xs text-blue-400 hover:underline"
+          >
+            Clear
+          </button>
+        }
+      </div>
+      <ul class="max-h-64 overflow-y-auto">
+        @for (tag of availableTags; track tag) {
+          <li>
+            <label
+              class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-800 cursor-pointer text-sm text-gray-200"
+            >
+              <input
+                type="checkbox"
+                [checked]="isSelected(tag)"
+                (change)="toggleTag(tag)"
+                class="accent-blue-500"
+              />
+              <span>{{ tag }}</span>
+            </label>
+          </li>
+        }
+        @if (availableTags.length === 0) {
+          <li class="px-2 py-2 text-xs text-gray-500">No tags available</li>
+        }
+      </ul>
+    </div>
+  }
+</div>

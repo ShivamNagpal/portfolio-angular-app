@@ -1,0 +1,25 @@
+[
+  {
+    "category": "Languages",
+    "items": ["Java", "Kotlin", "Python", "TypeScript"]
+  },
+  {
+    "category": "Frameworks",
+    "items": ["Spring Boot", "Vert.x", "Angular"]
+  },
+  {
+    "category": "Infrastructure",
+    "items": ["Kafka", "Flink", "AWS", "Postgres", "Redis"]
+  },
+  {
+    "category": "Practices",
+    "items": [
+      "Distributed Systems",
+      "Durable Execution",
+      "Streaming ETL",
+      "Event-driven Architecture",
+      "Hexagonal Architecture",
+      "TDD"
+    ]
+  }
+]

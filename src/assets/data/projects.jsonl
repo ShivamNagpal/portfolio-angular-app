@@ -1,0 +1,1 @@
+{"id":"logplay","title":"LogPlay","summary":"Open-source framework for durable checkpointed execution. Guarantees exactly-once behavior and safe recovery in the face of failures.","tags":["Kotlin","Durable Execution"],"repoUrl":"https://github.com/logplay-dev/logplay-server","featured":true,"role":"author"}

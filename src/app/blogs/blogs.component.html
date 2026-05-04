@@ -1,1 +1,101 @@
-<p>blogs works!</p>
+<div class="min-h-screen bg-gray-950 px-4 sm:px-8 py-12">
+  <div class="max-w-6xl mx-auto">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-white mb-2">Blog</h1>
+      <p class="text-gray-400">
+        Notes on backend engineering, distributed systems, and the things I've
+        learned shipping them.
+      </p>
+    </header>
+
+    @if (allTags().length > 0) {
+      <div class="mb-6">
+        <app-tag-filter
+          [availableTags]="allTags()"
+          (selectedTagsChange)="onSelectedTagsChange($event)"
+        />
+      </div>
+    }
+
+    @if (filteredPosts().length === 0) {
+      <p class="text-gray-500 italic">No posts match the selected tags.</p>
+    }
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      @for (post of filteredPosts(); track post.slug) {
+        <a
+          [routerLink]="['/blogs', post.slug]"
+          class="block bg-gray-500 bg-opacity-30 backdrop-blur rounded-2xl overflow-hidden flex flex-col transition hover:-translate-y-0.5 hover:shadow-xl"
+        >
+          @if (post.coverImage) {
+            <img
+              [ngSrc]="post.coverImage"
+              [alt]="post.title"
+              width="640"
+              height="360"
+              class="w-full aspect-video object-cover"
+            />
+          }
+          <div class="p-6 flex flex-col gap-2 flex-1">
+            <h2 class="text-xl font-bold text-white">{{ post.title }}</h2>
+            @if (post.publishedDate) {
+              <p class="text-gray-400 text-xs">
+                {{ post.publishedDate | date: "longDate" }}
+              </p>
+            }
+            <p class="text-gray-300 text-sm flex-1">{{ post.summary }}</p>
+            @if (post.tags && post.tags.length > 0) {
+              <div class="flex flex-wrap gap-1 mt-2">
+                @for (tag of post.tags; track tag) {
+                  <span
+                    class="text-xs bg-gray-700 text-gray-300 px-2 py-0.5 rounded"
+                  >
+                    {{ tag }}
+                  </span>
+                }
+              </div>
+            }
+          </div>
+        </a>
+      }
+    </div>
+
+    @if (manifest() && manifest()!.totalPages > 1) {
+      <nav
+        class="mt-10 flex flex-wrap items-center justify-center gap-2"
+        aria-label="Pagination"
+      >
+        <button
+          type="button"
+          class="text-xs px-3 py-1 rounded-full bg-gray-700 text-gray-200 hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed transition"
+          [disabled]="currentPage() === 1"
+          (click)="goToPage(currentPage() - 1)"
+        >
+          ← Prev
+        </button>
+        @for (n of pageNumbers(); track n) {
+          <button
+            type="button"
+            class="text-xs px-3 py-1 rounded-full transition"
+            [class.bg-blue-500]="n === currentPage()"
+            [class.text-white]="n === currentPage()"
+            [class.bg-gray-700]="n !== currentPage()"
+            [class.text-gray-300]="n !== currentPage()"
+            [class.hover:bg-gray-600]="n !== currentPage()"
+            (click)="goToPage(n)"
+          >
+            {{ n }}
+          </button>
+        }
+        <button
+          type="button"
+          class="text-xs px-3 py-1 rounded-full bg-gray-700 text-gray-200 hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed transition"
+          [disabled]="currentPage() === manifest()!.totalPages"
+          (click)="goToPage(currentPage() + 1)"
+        >
+          Next →
+        </button>
+      </nav>
+    }
+  </div>
+</div>

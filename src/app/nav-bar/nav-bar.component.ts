@@ -28,8 +28,9 @@ export class NavBarComponent implements OnInit {
 
   isOpen: boolean = false;
   navItems: NavItem[] = [
-    { name: 'Home', path: '/' },
-    // { name: 'Blogs', path: '/blogs' },
+    { name: 'About', path: '/about' },
+    { name: 'Blogs', path: '/blogs' },
+    { name: 'Code', path: '/code' },
     { name: 'Videos', path: '/videos' },
     { name: 'Contact', path: '/contact' },
   ];
