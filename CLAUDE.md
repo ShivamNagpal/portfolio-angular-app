@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Angular 18 portfolio website for ShivamNagpal.dev with Tailwind CSS and Angular Material. Hosted on Cloudflare. Uses **Static Site Generation (SSG)**: every route in `routes.txt` is pre-rendered at build time into a real `index.html` (output under `dist/portfolio-angular-app/browser/<route>/index.html`) for SEO, then hydrated client-side. The codebase also includes Express SSR support (`server.ts`), but production deploys serve the static pre-rendered output, not the SSR server.
+Angular 18 portfolio website for ShivamNagpal.dev with Tailwind CSS and Angular Material. Hosted on Cloudflare. Uses **Static Site Generation (SSG)**: every route in `routes.txt` (generated at build time from `routes.base.txt` + content) is pre-rendered into a real `index.html` (output under `dist/portfolio-angular-app/browser/<route>/index.html`) for SEO, then hydrated client-side. The codebase also includes Express SSR support (`server.ts`), but production deploys serve the static pre-rendered output, not the SSR server.
 
 ## Commands
 
@@ -22,7 +22,12 @@ Angular 18 portfolio website for ShivamNagpal.dev with Tailwind CSS and Angular 
 
 **Routing:** Defined in `app-routing.module.ts` — `/` (Home), `/about`, `/code`, `/blogs`, `/blogs/:slug`, `/videos`, `/contact`. **All routes are lazy-loaded** via `loadComponent` so each page is its own JS chunk. Static routes carry `data: { title, description }` for SEO.
 
-**SSG / Pre-rendering:** `angular.json` configures `prerender: { routesFile: "routes.txt" }`. At build time, every listed route is rendered to a static HTML file (visible in `dist/portfolio-angular-app/browser/<route>/index.html`). Build log says `Prerendered N static routes`. **When adding a new route, you must add it to BOTH `app-routing.module.ts` AND `routes.txt`** — otherwise the route works at runtime but isn't pre-rendered, hurting SEO.
+**SSG / Pre-rendering:** `angular.json` configures `prerender: { routesFile: "routes.txt" }`. Both `routes.txt` and `src/sitemap.xml` are **generated at build time** from committed base files plus `blogs.jsonl`:
+
+- `scripts/build-routes.js` → `routes.txt` from `routes.base.txt` + non-draft blog slugs
+- `scripts/build-sitemap.js` → `src/sitemap.xml` from `sitemap.base.xml` + non-draft blog entries (lastmod = `publishedDate`)
+
+Both outputs are gitignored. At build time, every listed route in `routes.txt` is rendered to a static HTML file (visible in `dist/portfolio-angular-app/browser/<route>/index.html`); build log says `Prerendered N static routes`. **When adding a new static route, add it to `app-routing.module.ts`, `routes.base.txt`, and `sitemap.base.xml`** — otherwise the route works at runtime but isn't pre-rendered or indexed, hurting SEO. Blog detail entries pick up automatically from `blogs.jsonl`.
 
 **SSR (unused in prod):** `server.ts` runs an Express server using Angular's `CommonEngine`. The SSR module is `app.module.server.ts`. Production hosting on Cloudflare uses the pre-rendered static output, not this server.
 
@@ -50,7 +55,7 @@ GitHub Actions (`.github/workflows/build_pr.yml`) runs on PRs to `staging`/`prod
 
 - Components use `takeUntilDestroyed()` pattern for RxJS subscription cleanup
 - `NgOptimizedImage` used for performance-critical images
-- Pre-rendering routes must be kept in sync across `routes.txt`, `app-routing.module.ts`, and `src/sitemap.xml`
+- Pre-rendering routes must be kept in sync across `routes.base.txt` (static), `app-routing.module.ts`, and `sitemap.base.xml`. Blog detail entries in both the generated `routes.txt` and `src/sitemap.xml` come from `blogs.jsonl` automatically.
 - **Content data** is split into two shapes:
   - **Paginated types** (`blogs`, `videos`, `projects`): source of truth is `src/assets/data/<type>.jsonl` (one JSON object per line, committed). `scripts/build-data-pages.js` runs at build time, sorts/filters each type, and emits per-page JSON files plus a manifest under `src/assets/data/<type>/page-N.json` and `src/assets/data/<type>/index.json`. Generated files are gitignored. Editing content = editing the JSONL.
   - **Flat types** (`companies`, `talks`, `skills`, `social-links`): committed JSON arrays at `src/assets/data/<type>.json`. Loaded as a single fetch.
@@ -65,10 +70,8 @@ GitHub Actions (`.github/workflows/build_pr.yml`) runs on PRs to `staging`/`prod
 - **Blog posts**: Markdown body in `src/assets/blogs/<slug>.md`, metadata in `src/assets/data/blogs.jsonl` (rendered via `ngx-markdown`). Publishing a new post:
   1. Append a JSON line to `src/assets/data/blogs.jsonl`
   2. Write `src/assets/blogs/<slug>.md`
-  3. Append `/blogs/<slug>` to `routes.txt` (so the detail page is pre-rendered)
-  4. Add a `<url>` entry in `src/sitemap.xml`
-  5. `npm run build-data` (or any full build) regenerates pages + manifest
-- **Validation**: `scripts/validate-blogs.js` runs before the page fan-out and `ng build`. It enforces: every non-draft blog slug has a matching `.md`; no orphan `.md` files; no duplicate slugs/ids in any JSONL. Posts with `"draft": true` are excluded from listings and don't need a `.md` file — do not add their slug to `routes.txt`.
+  3. `npm run build` (or `npm run build-data && npm run build-routes && npm run build-sitemap`) regenerates pages, manifest, `routes.txt`, and `src/sitemap.xml` — the new `/blogs/<slug>` is picked up everywhere automatically
+- **Validation**: `scripts/validate-blogs.js` runs before the page fan-out and `ng build`. It enforces: every non-draft blog slug has a matching `.md`; no orphan `.md` files; no duplicate slugs/ids in any JSONL. Posts with `"draft": true` are excluded from listings and from the generated `routes.txt`, and don't need a `.md` file.
 
 ## SEO
 
