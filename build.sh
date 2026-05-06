@@ -24,6 +24,18 @@ build_data_pages() {
   node scripts/build-data-pages.js
 }
 
+# Function to generate routes.txt from base routes + content
+build_routes() {
+  echo "** Building routes.txt..."
+  node scripts/build-routes.js
+}
+
+# Function to generate src/sitemap.xml from base sitemap + content
+build_sitemap() {
+  echo "** Building sitemap.xml..."
+  node scripts/build-sitemap.js
+}
+
 # Function to build the node project
 build_project() {
   echo "** Building project..."
@@ -36,6 +48,8 @@ main() {
      check_code_format && \
      validate_blogs && \
      build_data_pages && \
+     build_routes && \
+     build_sitemap && \
      build_project; then
     echo "Build Succeeded"
     exit 0

@@ -10,6 +10,8 @@
     "prettier": "npx prettier . --write --ignore-unknown",
     "validate-blogs": "node scripts/validate-blogs.js",
     "build-data": "node scripts/build-data-pages.js",
+    "build-routes": "node scripts/build-routes.js",
+    "build-sitemap": "node scripts/build-sitemap.js",
     "test": "ng test --browsers ChromeHeadless --watch=false",
     "test-browser": "ng test",
     "serve:ssr:portfolio-angular-app": "node dist/portfolio-angular-app/server/server.mjs"
