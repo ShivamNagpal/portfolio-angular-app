@@ -1,32 +1,52 @@
 <nav
   [ngClass]="{ 'h-full': isOpen, fixed: isOpen, relative: !isOpen }"
-  class="nav-bar px-4 py-4 bg-primary w-full sm:h-auto sm:flex sm:px-0 sm:w-full sm:relative shadow-xl z-[999]"
+  class="nav-bar bg-primary w-full sm:h-auto sm:relative shadow-xl z-[999]"
 >
   <div
-    [ngClass]="{ 'justify-end': isOpen }"
-    class="flex flex-row w-full sm:hidden"
+    class="px-8 sm:px-16 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between"
   >
-    <button class="leading-[0]" (click)="toggleNavBar()">
-      <mat-icon class="text-white">{{ isOpen ? "close" : "menu" }}</mat-icon>
-    </button>
-  </div>
-  <ul
-    [ngClass]="{ hidden: !isOpen, block: isOpen }"
-    class="flex flex-col sm:flex sm:flex-1 sm:flex-row sm:justify-around"
-  >
-    @for (item of navItems; track item.name) {
-      <li>
-        <a
-          class="nav-item"
-          routerLink="{{ item.path }}"
-          routerLinkActive="active"
-          ariaCurrentWhenActive="page"
-          [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeNavBar()"
+    <!-- Brand + mobile toggle row -->
+    <div class="flex flex-row items-center w-full sm:w-auto">
+      <a
+        routerLink="/"
+        (click)="closeNavBar()"
+        class="text-white font-semibold text-base tracking-tight hover:text-gray-300 transition-colors"
+      >
+        shivamnagpal<span class="text-gray-500">.dev</span>
+      </a>
+
+      <div class="flex-1 sm:hidden flex justify-end">
+        <button
+          class="leading-[0]"
+          (click)="toggleNavBar()"
+          [attr.aria-label]="isOpen ? 'Close menu' : 'Open menu'"
         >
-          {{ item.name }}
-        </a>
-      </li>
-    }
-  </ul>
+          <mat-icon class="text-white">
+            {{ isOpen ? "close" : "menu" }}
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Nav items -->
+    <ul
+      [ngClass]="{ hidden: !isOpen, flex: isOpen }"
+      class="flex-col sm:flex sm:flex-row sm:items-center sm:gap-6 mt-4 sm:mt-0"
+    >
+      @for (item of navItems; track item.name) {
+        <li>
+          <a
+            class="nav-item"
+            [routerLink]="item.path"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeNavBar()"
+          >
+            {{ item.name }}
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
 </nav>

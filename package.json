@@ -8,6 +8,10 @@
     "build": "./build.sh",
     "watch": "ng build --watch --configuration development",
     "prettier": "npx prettier . --write --ignore-unknown",
+    "validate-blogs": "node scripts/validate-blogs.js",
+    "build-data": "node scripts/build-data-pages.js",
+    "build-routes": "node scripts/build-routes.js",
+    "build-sitemap": "node scripts/build-sitemap.js",
     "test": "ng test --browsers ChromeHeadless --watch=false",
     "test-browser": "ng test",
     "serve:ssr:portfolio-angular-app": "node dist/portfolio-angular-app/server/server.mjs"
@@ -27,6 +31,8 @@
     "@angular/router": "^18.2.2",
     "@angular/ssr": "^18.2.2",
     "express": "^4.18.2",
+    "marked": "^12.0.2",
+    "ngx-markdown": "^18.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"

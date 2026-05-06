@@ -1,26 +1,63 @@
-<div class="h-screen overflow-y-auto p-4 mt-4">
-  <div class="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-    @for (video of videoItems; track video.track()) {
-      <div
-        class="rounded-lg overflow-hidden bg-white border-2 shadow-md ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl"
-      >
-        <a
-          href="https://www.youtube.com/watch?v={{ video.id }}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img
-            class="w-full aspect-video object-cover"
-            ngSrc="https://img.youtube.com/vi/{{ video.id }}/maxresdefault.jpg"
-            alt="{{ video.title }}"
-            height="360"
-            width="640"
-          />
-        </a>
-        <div class="p-3 text-sm text-white/90 bg-primary font-bold">
-          {{ video.title }}
-        </div>
+<div class="min-h-screen bg-gray-950 px-4 sm:px-8 py-12">
+  <div class="max-w-6xl mx-auto">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-white mb-2">Videos</h1>
+      <p class="text-gray-400">
+        Tech talks on backend engineering and distributed systems.
+      </p>
+    </header>
+
+    @if (allTags().length > 0) {
+      <div class="mb-6">
+        <app-tag-filter
+          [availableTags]="allTags()"
+          (selectedTagsChange)="onSelectedTagsChange($event)"
+        />
       </div>
+    }
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      @for (video of filteredVideos(); track video.id) {
+        <app-video-card [video]="video" />
+      }
+    </div>
+
+    @if (manifest() && manifest()!.totalPages > 1) {
+      <nav
+        class="mt-10 flex flex-wrap items-center justify-center gap-2"
+        aria-label="Pagination"
+      >
+        <button
+          type="button"
+          class="text-xs px-3 py-1 rounded-full bg-gray-700 text-gray-200 hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed transition"
+          [disabled]="currentPage() === 1"
+          (click)="goToPage(currentPage() - 1)"
+        >
+          ← Prev
+        </button>
+        @for (n of pageNumbers(); track n) {
+          <button
+            type="button"
+            class="text-xs px-3 py-1 rounded-full transition"
+            [class.bg-blue-500]="n === currentPage()"
+            [class.text-white]="n === currentPage()"
+            [class.bg-gray-700]="n !== currentPage()"
+            [class.text-gray-300]="n !== currentPage()"
+            [class.hover:bg-gray-600]="n !== currentPage()"
+            (click)="goToPage(n)"
+          >
+            {{ n }}
+          </button>
+        }
+        <button
+          type="button"
+          class="text-xs px-3 py-1 rounded-full bg-gray-700 text-gray-200 hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed transition"
+          [disabled]="currentPage() === manifest()!.totalPages"
+          (click)="goToPage(currentPage() + 1)"
+        >
+          Next →
+        </button>
+      </nav>
     }
   </div>
 </div>
