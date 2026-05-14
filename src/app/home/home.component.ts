@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
       '@context': 'https://schema.org',
       '@type': 'Person',
       name: 'Shivam Nagpal',
-      url: 'https://shivamnagpal.dev',
+      url: 'https://shivamnagpal.dev/',
       jobTitle: 'Tech Lead / SDE-3',
       worksFor: {
         '@type': 'Organization',

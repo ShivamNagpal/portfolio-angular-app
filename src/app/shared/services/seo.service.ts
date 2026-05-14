@@ -27,7 +27,9 @@ export class SeoService {
       ? `${SITE_NAME} · Backend & Distributed Systems Engineer`
       : `${metadata.title} · ${SITE_NAME}`;
 
-    const absoluteUrl = this.toAbsoluteUrl(metadata.url);
+    const canonicalUrl = this.withTrailingSlash(
+      this.toAbsoluteUrl(metadata.url),
+    );
     const ogImage = this.toAbsoluteUrl(metadata.ogImage ?? DEFAULT_OG_IMAGE);
     const type = metadata.type ?? 'website';
 
@@ -39,7 +41,7 @@ export class SeoService {
       content: metadata.description,
     });
     this.meta.updateTag({ property: 'og:type', content: type });
-    this.meta.updateTag({ property: 'og:url', content: absoluteUrl });
+    this.meta.updateTag({ property: 'og:url', content: canonicalUrl });
     this.meta.updateTag({ property: 'og:image', content: ogImage });
     this.meta.updateTag({
       name: 'twitter:card',
@@ -52,7 +54,7 @@ export class SeoService {
     });
     this.meta.updateTag({ name: 'twitter:image', content: ogImage });
 
-    this.setCanonical(absoluteUrl);
+    this.setCanonical(canonicalUrl);
   }
 
   setStructuredData(data: object | null): void {
@@ -67,6 +69,14 @@ export class SeoService {
     }
     const path = pathOrUrl.startsWith('/') ? pathOrUrl : `/${pathOrUrl}`;
     return `${SITE_URL}${path}`;
+  }
+
+  // Cloudflare Pages 308-redirects non-trailing-slash URLs to the trailing-slash
+  // form (e.g. /about → /about/), and the sitemap uses the trailing-slash form.
+  // Canonical / og:url must match the sitemap to avoid Search Console flagging
+  // pages as "Page with redirect".
+  private withTrailingSlash(absoluteUrl: string): string {
+    return absoluteUrl.endsWith('/') ? absoluteUrl : `${absoluteUrl}/`;
   }
 
   private setCanonical(absoluteUrl: string): void {
