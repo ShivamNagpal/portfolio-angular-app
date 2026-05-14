@@ -72,11 +72,25 @@ describe('SeoService', () => {
     expect(el.textContent).toBe('');
   });
 
-  it('should make canonical URL absolute', () => {
+  it('should make canonical URL absolute with trailing slash', () => {
     service.setMeta({ title: 'Code', description: 'd', url: '/code' });
     const canonical = document.querySelector<HTMLLinkElement>(
       'link[rel="canonical"]',
     );
-    expect(canonical?.href).toBe('https://shivamnagpal.dev/code');
+    expect(canonical?.href).toBe('https://shivamnagpal.dev/code/');
+  });
+
+  it('should leave the root canonical URL untouched', () => {
+    service.setMeta({ title: 'Home', description: 'd', url: '/' });
+    const canonical = document.querySelector<HTMLLinkElement>(
+      'link[rel="canonical"]',
+    );
+    expect(canonical?.href).toBe('https://shivamnagpal.dev/');
+  });
+
+  it('should set og:url with trailing slash to match canonical', () => {
+    service.setMeta({ title: 'Blog', description: 'd', url: '/blogs/my-post' });
+    const og = meta.getTag('property="og:url"');
+    expect(og?.content).toBe('https://shivamnagpal.dev/blogs/my-post/');
   });
 });

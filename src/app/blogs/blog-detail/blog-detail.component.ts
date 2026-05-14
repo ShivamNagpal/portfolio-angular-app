@@ -47,7 +47,7 @@ export class BlogDetailComponent implements OnInit {
             description: found.summary,
             datePublished: found.publishedDate,
             author: { '@type': 'Person', name: found.author },
-            url: `https://shivamnagpal.dev/blogs/${found.slug}`,
+            url: `https://shivamnagpal.dev/blogs/${found.slug}/`,
           });
         } else {
           this.seo.setMeta({
