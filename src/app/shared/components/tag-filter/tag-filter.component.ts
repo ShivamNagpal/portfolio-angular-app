@@ -7,14 +7,15 @@ import {
   Input,
   Output,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-tag-filter',
-  standalone: true,
   imports: [MatIcon],
   templateUrl: './tag-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './tag-filter.component.scss',
 })
 export class TagFilterComponent {

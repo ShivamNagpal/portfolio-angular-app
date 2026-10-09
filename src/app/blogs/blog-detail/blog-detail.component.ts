@@ -1,9 +1,16 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownComponent, provideMarkdown } from 'ngx-markdown';
 import { BlogPost } from '../../data/interfaces';
 import { estimateReadingMinutes } from '../../shared/utils/reading-time';
 import { SeoService } from '../../shared/services/seo.service';
@@ -11,9 +18,10 @@ import { DataService } from '../../shared/services/data.service';
 
 @Component({
   selector: 'app-blog-detail',
-  standalone: true,
-  imports: [DatePipe, NgOptimizedImage, RouterLink, MatIcon, MarkdownModule],
+  imports: [DatePipe, NgOptimizedImage, RouterLink, MatIcon, MarkdownComponent],
+  providers: [provideMarkdown()],
   templateUrl: './blog-detail.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './blog-detail.component.scss',
 })
 export class BlogDetailComponent implements OnInit {

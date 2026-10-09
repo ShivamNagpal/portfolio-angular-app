@@ -4,9 +4,13 @@ import {
   RouterModule,
   convertToParamMap,
 } from '@angular/router';
-import { provideMarkdown } from 'ngx-markdown';
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { MarkdownComponent } from 'ngx-markdown';
+import { By } from '@angular/platform-browser';
+import { provideHttpClient, withXhr } from '@angular/common/http';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 
 import { BlogDetailComponent } from './blog-detail.component';
 import { BLOG_FIXTURES, STUB_DATA_SERVICE } from '../../data/test-fixtures';
@@ -17,9 +21,8 @@ function configure(slug: string) {
   return TestBed.configureTestingModule({
     imports: [RouterModule.forRoot(routes), BlogDetailComponent],
     providers: [
-      provideHttpClient(),
+      provideHttpClient(withXhr()),
       provideHttpClientTesting(),
-      provideMarkdown(),
       { provide: DataService, useValue: STUB_DATA_SERVICE },
       {
         provide: ActivatedRoute,
@@ -55,16 +58,30 @@ describe('BlogDetailComponent', () => {
     });
 
     it('should render the markdown directive with the correct src', () => {
-      const md = fixture.nativeElement.querySelector('markdown');
+      const md = fixture.debugElement.query(By.directive(MarkdownComponent));
       expect(md).toBeTruthy();
-      expect(md.getAttribute('ng-reflect-src')).toContain(
-        `assets/blogs/${validSlug}.md`,
-      );
+      expect(md.componentInstance.src).toBe(`assets/blogs/${validSlug}.md`);
     });
 
     it('should compute reading time when markdown loads', () => {
       component.onMarkdownLoaded('one two three four five six');
       expect(component.readingMinutes()).toBe(1);
+    });
+
+    it('should fetch and render markdown using the page providers', async () => {
+      const http = TestBed.inject(HttpTestingController);
+      http
+        .expectOne(`assets/blogs/${validSlug}.md`)
+        .flush('# Blog heading\n\nMarkdown **body**.');
+
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const md: HTMLElement = fixture.nativeElement.querySelector('markdown');
+      expect(md.querySelector('h1')?.textContent).toBe('Blog heading');
+      expect(md.querySelector('strong')?.textContent).toBe('body');
+      expect(component.readingMinutes()).toBe(1);
+      http.verify();
     });
   });
 

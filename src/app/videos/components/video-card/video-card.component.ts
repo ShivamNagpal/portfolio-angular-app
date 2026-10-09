@@ -1,4 +1,10 @@
-import { Component, inject, Input, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -6,9 +12,9 @@ import { VideoItem } from '../../../data/interfaces';
 
 @Component({
   selector: 'app-video-card',
-  standalone: true,
   imports: [NgOptimizedImage, MatIcon],
   templateUrl: './video-card.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './video-card.component.scss',
 })
 export class VideoCardComponent {

@@ -1,5 +1,5 @@
 <nav
-  [ngClass]="{ 'h-full': isOpen, fixed: isOpen, relative: !isOpen }"
+  [ngClass]="{ 'h-full': isOpen(), fixed: isOpen(), relative: !isOpen() }"
   class="nav-bar bg-primary w-full sm:h-auto sm:relative shadow-xl z-[999]"
 >
   <div
@@ -19,10 +19,10 @@
         <button
           class="leading-[0]"
           (click)="toggleNavBar()"
-          [attr.aria-label]="isOpen ? 'Close menu' : 'Open menu'"
+          [attr.aria-label]="isOpen() ? 'Close menu' : 'Open menu'"
         >
           <mat-icon class="text-white">
-            {{ isOpen ? "close" : "menu" }}
+            {{ isOpen() ? "close" : "menu" }}
           </mat-icon>
         </button>
       </div>
@@ -30,7 +30,7 @@
 
     <!-- Nav items -->
     <ul
-      [ngClass]="{ hidden: !isOpen, flex: isOpen }"
+      [ngClass]="{ hidden: !isOpen(), flex: isOpen() }"
       class="flex-col sm:flex sm:flex-row sm:items-center sm:gap-6 mt-4 sm:mt-0"
     >
       @for (item of navItems; track item.name) {

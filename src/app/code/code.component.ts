@@ -1,4 +1,10 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs';
@@ -9,9 +15,9 @@ import { filterAndSortByTags, uniqueTags } from '../shared/utils/tag-filter';
 
 @Component({
   selector: 'app-code',
-  standalone: true,
   imports: [MatIcon, TagFilterComponent],
   templateUrl: './code.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './code.component.scss',
 })
 export class CodeComponent {

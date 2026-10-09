@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
+import { Subject } from 'rxjs';
 
 import { BlogsComponent } from './blogs.component';
 import { BLOG_FIXTURES, STUB_DATA_SERVICE } from '../data/test-fixtures';
@@ -57,5 +58,37 @@ describe('BlogsComponent', () => {
       .filter((p) => p.tags?.includes(tag)).length;
     const cards = fixture.nativeElement.querySelectorAll('.grid > a');
     expect(cards.length).toBe(expected);
+  });
+});
+
+describe('BlogsComponent with asynchronous data', () => {
+  it('renders blog cards when the page data arrives after the first check', async () => {
+    const posts = new Subject<typeof BLOG_FIXTURES>();
+    await TestBed.configureTestingModule({
+      imports: [RouterModule.forRoot(routes), BlogsComponent],
+      providers: [
+        {
+          provide: DataService,
+          useValue: {
+            ...STUB_DATA_SERVICE,
+            getBlogsPage: () => posts.asObservable(),
+          },
+        },
+      ],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(BlogsComponent);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelectorAll('.grid > a').length).toBe(0);
+
+    posts.next(BLOG_FIXTURES);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('.grid > a').length).toBe(
+      BLOG_FIXTURES.length,
+    );
+    expect(fixture.nativeElement.textContent).toContain(BLOG_FIXTURES[0].title);
+    posts.complete();
   });
 });

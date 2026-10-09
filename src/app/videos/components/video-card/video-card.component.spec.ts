@@ -37,11 +37,12 @@ describe('VideoCardComponent', () => {
     expect(iframe).toBeFalsy();
   });
 
-  it('should render iframe after play() is called', () => {
-    component.play();
+  it('should render iframe after clicking play', () => {
+    fixture.nativeElement.querySelector('button').click();
     fixture.detectChanges();
     const iframe = fixture.nativeElement.querySelector('iframe');
     expect(iframe).toBeTruthy();
+    expect(iframe.getAttribute('src')).toContain(sampleVideo.id);
   });
 
   it('should render the title', () => {

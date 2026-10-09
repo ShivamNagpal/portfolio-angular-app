@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { FeaturedCardsComponent } from './components/featured-cards/featured-cards.component';
@@ -6,9 +11,9 @@ import { SeoService } from '../shared/services/seo.service';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
   imports: [NgOptimizedImage, MatIcon, FeaturedCardsComponent],
   templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {

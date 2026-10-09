@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -8,9 +8,9 @@ import { DataService } from '../../../shared/services/data.service';
 
 @Component({
   selector: 'app-featured-cards',
-  standalone: true,
   imports: [NgOptimizedImage, MatIcon, RouterLink],
   templateUrl: './featured-cards.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './featured-cards.component.scss',
 })
 export class FeaturedCardsComponent {

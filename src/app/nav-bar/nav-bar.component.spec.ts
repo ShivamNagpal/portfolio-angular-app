@@ -21,4 +21,24 @@ describe('NavBarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('opens and closes the mobile menu when clicked', () => {
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector(
+      'button[aria-label="Open menu"]',
+    );
+
+    button.click();
+    fixture.detectChanges();
+    expect(button.getAttribute('aria-label')).toBe('Close menu');
+    expect(fixture.nativeElement.querySelector('ul').classList).toContain(
+      'flex',
+    );
+
+    button.click();
+    fixture.detectChanges();
+    expect(button.getAttribute('aria-label')).toBe('Open menu');
+    expect(fixture.nativeElement.querySelector('ul').classList).toContain(
+      'hidden',
+    );
+  });
 });
