@@ -21,6 +21,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 The development configuration externalizes the unused `marked-katex-extension` import to work around [ngx-markdown's optional KaTeX import issue](https://github.com/jfcere/ngx-markdown/issues/681). If KaTeX is enabled later, install its dependencies and remove this external import configuration.
 
+Zone.js is imported only in the browser entry point, `src/main.ts`. Keep it out of the shared build polyfills: loading it during server rendering replaces the dev server's global `Promise` constructor and causes Sass imports to fail on later rebuilds. The server uses Angular's default zoneless change detection, while the browser explicitly enables Zone.js change detection. The test target loads its own Zone.js polyfills.
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.

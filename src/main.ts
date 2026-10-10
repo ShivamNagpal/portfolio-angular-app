@@ -1,3 +1,5 @@
+import 'zone.js';
+
 import { provideZoneChangeDetection } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 

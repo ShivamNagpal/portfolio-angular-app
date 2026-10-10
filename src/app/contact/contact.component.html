@@ -1,26 +1,30 @@
 <div class="relative h-screen">
   <div class="bg-black overflow-hidden w-full h-full">
     <img
-      ngSrc="assets/computer.jpg"
-      alt="background"
-      class="blur-sm object-cover object-left"
+      ngSrc="assets/contact-engineering.jpg"
+      alt=""
+      class="object-cover object-left"
+      priority
       fill
     />
   </div>
 
-  <div
-    class="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col gap-2 items-center w-full h-full"
-  >
+  <div class="absolute top-0 flex flex-col gap-2 items-center w-full h-full">
     <h1 class="text-3xl text-white center mt-4">Contact Me</h1>
     <span class="text-sm text-gray-300 text-center">
       Have a question or want to work together
     </span>
     <div class="flex-1 content-center">
       <div
-        class="bg-gray-500 bg-opacity-30 backdrop-blur p-8 flex flex-col rounded-2xl items-center"
+        class="bg-gray-500 bg-opacity-30 backdrop-blur py-8 px-4 xs:px-8 flex flex-col rounded-2xl items-center my-8 mx-4 xs:mx-8"
       >
-        <p class="contact-methods-title">Book a meeting</p>
-        <a href="https://cal.com/shivamnagpal" target="_blank">
+        <a
+          href="https://cal.com/shivamnagpal"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex flex-col items-center"
+        >
+          <p class="contact-methods-title">Book a meeting</p>
           <mat-icon class="text-white text-5xl !w-auto !h-auto">
             calendar_month
           </mat-icon>
@@ -34,21 +38,21 @@
 
         <p class="contact-methods-title">Send an email</p>
         <div
-          class="bg-gray-300 bg-opacity-50 px-4 py-2 rounded-xl flex flex-row gap-1 items-center"
+          class="bg-gray-300 bg-opacity-50 px-4 py-2 rounded-xl flex flex-row gap-1 items-center flex-wrap justify-center"
         >
-          <p class="text-white flex-1 font-bold">{{ email }}</p>
-          <button (click)="copyEmail()">
-            <mat-icon class="ml-4 email-buttons !w-auto !h-auto">
-              content_copy
-            </mat-icon>
-          </button>
-          <button>
+          <p class="text-white flex-1 font-bold text-center">{{ email }}</p>
+          <div class="ml-4">
+            <button aria-label="Copy email address" (click)="copyEmail()">
+              <mat-icon class="email-buttons !w-auto !h-auto">
+                content_copy
+              </mat-icon>
+            </button>
             <a href="{{ 'mailto:' + email }}">
               <mat-icon class="ml-2 email-buttons !w-auto !h-auto">
                 send
               </mat-icon>
             </a>
-          </button>
+          </div>
         </div>
       </div>
     </div>
