@@ -55,10 +55,7 @@ export interface Talk {
 }
 
 export type SkillCategory =
-  | 'Languages'
-  | 'Frameworks'
-  | 'Infrastructure'
-  | 'Practices';
+  'Languages' | 'Frameworks' | 'Infrastructure' | 'Practices';
 
 export interface SkillGroup {
   category: SkillCategory;

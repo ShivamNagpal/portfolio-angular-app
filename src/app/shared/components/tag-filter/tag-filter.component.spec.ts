@@ -69,4 +69,18 @@ describe('TagFilterComponent', () => {
     expect(component.selectedCount).toBe(0);
     expect(emitted).toEqual([]);
   });
+
+  it('shows a replacement set of tags supplied by its parent', () => {
+    fixture.componentRef.setInput('availableTags', ['Angular', 'RxJS']);
+    fixture.detectChanges();
+    fixture.nativeElement.querySelector('button').click();
+    fixture.detectChanges();
+
+    const tagElements: NodeListOf<HTMLElement> =
+      fixture.nativeElement.querySelectorAll('ul li label span');
+    const tags = Array.from(tagElements, (element) =>
+      element.textContent?.trim(),
+    );
+    expect(tags).toEqual(['Angular', 'RxJS']);
+  });
 });

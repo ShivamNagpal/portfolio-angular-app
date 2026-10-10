@@ -1,5 +1,5 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { CommonEngine } from '@angular/ssr';
+import { CommonEngine } from '@angular/ssr/node';
 import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
@@ -12,7 +12,9 @@ export function app(): express.Express {
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
-  const commonEngine = new CommonEngine();
+  const commonEngine = new CommonEngine({
+    allowedHosts: ['shivamnagpal.dev', 'localhost', '127.0.0.1', '[::1]'],
+  });
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
@@ -21,7 +23,7 @@ export function app(): express.Express {
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
   server.get(
-    '**',
+    '/{*splat}',
     express.static(browserDistFolder, {
       maxAge: '1y',
       index: 'index.html',
@@ -29,7 +31,7 @@ export function app(): express.Express {
   );
 
   // All regular routes use the Angular engine
-  server.get('**', (req, res, next) => {
+  server.get('/{*splat}', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine

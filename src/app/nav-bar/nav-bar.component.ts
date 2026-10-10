@@ -1,4 +1,11 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+  signal,
+} from '@angular/core';
 import {
   NavigationEnd,
   Router,
@@ -17,16 +24,16 @@ interface NavItem {
 
 @Component({
   selector: 'app-nav-bar',
-  standalone: true,
   imports: [RouterLink, RouterLinkActive, NgClass, MatIcon],
   templateUrl: './nav-bar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './nav-bar.component.scss',
 })
 export class NavBarComponent implements OnInit {
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
 
-  isOpen: boolean = false;
+  isOpen = signal(false);
   navItems: NavItem[] = [
     { name: 'About', path: '/about' },
     { name: 'Blogs', path: '/blogs' },
@@ -49,11 +56,11 @@ export class NavBarComponent implements OnInit {
   }
 
   toggleNavBar() {
-    this.isOpen = !this.isOpen;
+    this.isOpen.update((open) => !open);
   }
 
   closeNavBar() {
-    this.isOpen = false;
+    this.isOpen.set(false);
   }
 
   private setActiveFromUrl(url: string) {

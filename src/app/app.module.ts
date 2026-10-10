@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import {
   BrowserModule,
   provideClientHydration,
+  withNoIncrementalHydration,
 } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideMarkdown } from 'ngx-markdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,9 +15,8 @@ import { FooterComponent } from './shared/components/footer/footer.component';
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, NavBarComponent, FooterComponent],
   providers: [
-    provideClientHydration(),
+    provideClientHydration(withNoIncrementalHydration()),
     provideHttpClient(withFetch()),
-    provideMarkdown(),
   ],
   bootstrap: [AppComponent],
 })

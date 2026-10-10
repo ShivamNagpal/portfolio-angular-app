@@ -1,4 +1,10 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NgOptimizedImage, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -9,9 +15,9 @@ import { filterAndSortByTags, uniqueTags } from '../shared/utils/tag-filter';
 
 @Component({
   selector: 'app-blogs',
-  standalone: true,
   imports: [NgOptimizedImage, DatePipe, RouterLink, TagFilterComponent],
   templateUrl: './blogs.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './blogs.component.scss',
 })
 export class BlogsComponent {
